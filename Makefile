@@ -3,7 +3,9 @@ MODULE  = $(notdir $(CURDIR))
 OS      = $(shell uname -s)
 
 # version
-JQUERY_VER = 3.7.1
+JQUERY_VER    = 3.7.1
+JQUERY_UI_VER = 1.13.2
+DARK_HIVE_VER = 1.13.2
 
 # dir
 CWD = $(CURDIR)
@@ -58,10 +60,14 @@ update:
 	sudo apt update
 	sudo apt install -uy `cat apt.$(OS)`
 
-gz: cdn/jquery.js
+gz: public/cdn/jquery.js public/cdn/jquery-ui.js public/cdn/dark-hive.css
 
-cdn/jquery.js:
-	$(CURL) $@ https://code.jquery.com/jquery-$(JQUERY_VER).slim.min.js
+public/cdn/jquery.js:
+	$(CURL) $@ https://code.jquery.com/jquery-$(JQUERY_VER).min.js
+public/cdn/jquery-ui.js:
+	$(CURL) $@ https://code.jquery.com/ui/$(JQUERY_UI_VER)/jquery-ui.min.js
+public/cdn/dark-hive.css:
+	$(CURL) $@ https://code.jquery.com/ui/$(DARK_HIVE_VER)/themes/dark-hive/jquery-ui.css
 
 # merge
 MERGE += Makefile README.md LICENSE $(D) $(J)
