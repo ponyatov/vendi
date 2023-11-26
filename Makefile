@@ -5,7 +5,6 @@ OS      = $(shell uname -s)
 # version
 JQUERY_VER    = 3.7.1
 JQUERY_UI_VER = 1.13.2
-DARK_HIVE_VER = 1.13.2
 
 # dir
 CWD = $(CURDIR)
@@ -64,10 +63,15 @@ gz: static/cdn/jquery.js static/cdn/jquery-ui.js static/cdn/dark-hive.css
 
 static/cdn/jquery.js:
 	$(CURL) $@ https://code.jquery.com/jquery-$(JQUERY_VER).min.js
-static/cdn/jquery-ui.js:
-	$(CURL) $@ https://code.jquery.com/ui/$(JQUERY_UI_VER)/jquery-ui.min.js
-static/cdn/dark-hive.css:
-	$(CURL) $@ https://code.jquery.com/ui/$(DARK_HIVE_VER)/themes/dark-hive/jquery-ui.css
+static/cdn/jquery-ui.js: $(GZ)/jquery-ui-$(JQUERY_UI_VER).zip
+	unzip $< -d static/cdn
+static/cdn/dark-hive.css: $(GZ)/jquery-ui-themes-$(JQUERY_UI_VER).zip
+	unzip $< -d static/cdn
+
+$(GZ)/jquery-ui-$(JQUERY_UI_VER).zip:
+	$(CURL) $@ https://jqueryui.com/resources/download/jquery-ui-$(JQUERY_UI_VER).zip
+$(GZ)/jquery-ui-themes-$(JQUERY_UI_VER).zip:
+	$(CURL) $@ https://jqueryui.com/resources/download/jquery-ui-themes-$(JQUERY_UI_VER).zip
 
 # merge
 MERGE += Makefile README.md LICENSE $(D) $(J)
