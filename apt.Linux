@@ -1,3 +1,4 @@
 git make curl
 code
 libssl-dev libcrypt-dev
+npm

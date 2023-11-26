@@ -9,6 +9,7 @@
     "targetPath":    "bin",
     "targetName":    "vendi",
     "dependencies": {
-        "vibe-d":    "~>0.9"
+        "vibe-d":    "~>0.9",
+        "msgpack-d": "~>1.0.5"
     }
 }
