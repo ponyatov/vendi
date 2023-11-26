@@ -1,6 +1,14 @@
 doctype html
-html
-	head
-		title vendi
-	body
-		block body
+html(lang='ru')
+    head
+        title vendi
+        link(rel="stylesheet", href="cdn/dark-hive.css")
+        link(rel="stylesheet", href="css.css")
+        script(async='',src="cdn/jquery.js")
+        script(async='',src="cdn/jquery-ui.js")
+    body
+        img(src="/logo.png")
+        block body
+        a(class="ui-button",href="/") home
+        a(class="ui-button",href="/about") about
+        a(class="ui-button",href="/hello") hello

@@ -60,13 +60,13 @@ update:
 	sudo apt update
 	sudo apt install -uy `cat apt.$(OS)`
 
-gz: public/cdn/jquery.js public/cdn/jquery-ui.js public/cdn/dark-hive.css
+gz: static/cdn/jquery.js static/cdn/jquery-ui.js static/cdn/dark-hive.css
 
-public/cdn/jquery.js:
+static/cdn/jquery.js:
 	$(CURL) $@ https://code.jquery.com/jquery-$(JQUERY_VER).min.js
-public/cdn/jquery-ui.js:
+static/cdn/jquery-ui.js:
 	$(CURL) $@ https://code.jquery.com/ui/$(JQUERY_UI_VER)/jquery-ui.min.js
-public/cdn/dark-hive.css:
+static/cdn/dark-hive.css:
 	$(CURL) $@ https://code.jquery.com/ui/$(DARK_HIVE_VER)/themes/dark-hive/jquery-ui.css
 
 # merge

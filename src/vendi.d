@@ -17,13 +17,13 @@ static this() {
 
 void main(string[] args) {
     writeln(args);
-    router.get("/", &index);
+    // 
+    router.get("/", staticTemplate!"index.dt");
     router.get("/hello", &hello);
-    router.get("/about", &about);
-    // link rel="stylesheet" href="dark-hive.css"
-    // link rel="stylesheet" href="css.css"
-    // script src="jquery.js"
-    router.get("*", serveStaticFiles("public/"));
+    router.get("/about", staticTemplate!"about.dt");
+    // 
+    router.get("/favicon.ico", serveStaticFile("static/logo.png"));
+    router.get("*", serveStaticFiles("static/"));
     // 
     listenHTTP(settings, router);
     runApplication();
@@ -34,14 +34,6 @@ void error(HTTPServerRequest req, HTTPServerResponse res,
     res.render!("error.dt", req, err);
 }
 
-void index(HTTPServerRequest req, HTTPServerResponse res) {
-    res.render!("index.dt", req);
-}
-
 void hello(HTTPServerRequest req, HTTPServerResponse res) {
     res.writeBody("Hello, World!");
-}
-
-void about(HTTPServerRequest req, HTTPServerResponse res) {
-    res.render!("about.dt", req);
 }
