@@ -65,8 +65,15 @@ static/cdn/jquery.js:
 	$(CURL) $@ https://code.jquery.com/jquery-$(JQUERY_VER).min.js
 static/cdn/jquery-ui.js: $(GZ)/jquery-ui-$(JQUERY_UI_VER).zip
 	unzip $< -d static/cdn
+	mv static/cdn/jquery-ui-$(JQUERY_UI_VER)/images/* static/cdn/images/
+	mv static/cdn/jquery-ui-$(JQUERY_UI_VER)/jquery-ui.min.js $@
+	touch $@ ; rm -r static/cdn/jquery-ui-$(JQUERY_UI_VER)
 static/cdn/dark-hive.css: $(GZ)/jquery-ui-themes-$(JQUERY_UI_VER).zip
 	unzip $< -d static/cdn
+	mv static/cdn/jquery-ui-themes-$(JQUERY_UI_VER)/images/* static/cdn/images/
+	mv static/cdn/jquery-ui-themes-$(JQUERY_UI_VER)/themes/dark-hive/jquery-ui.min.css $@
+	mv static/cdn/jquery-ui-themes-$(JQUERY_UI_VER)/themes/dark-hive/images/* static/cdn/images/
+	touch $@ ; rm -r static/cdn/jquery-ui-themes-$(JQUERY_UI_VER)
 
 $(GZ)/jquery-ui-$(JQUERY_UI_VER).zip:
 	$(CURL) $@ https://jqueryui.com/resources/download/jquery-ui-$(JQUERY_UI_VER).zip
