@@ -18,7 +18,7 @@ RUN  = dub run   --compiler=$(DC)
 
 # src
 D += $(wildcard src/*.d)
-J += $(wildcard *.json)
+J += $(wildcard dub*.json)
 
 # all
 .PHONY: all run
@@ -35,7 +35,7 @@ tmp/format_d: $(D)
 
 # doc
 doc: doc/yazyk_programmirovaniya_d.pdf doc/Programming_in_D.pdf \
-     doc/BuildWebAppsinVibe.pdf
+     doc/BuildWebAppsinVibe.pdf doc/BuildTimekeepWithVibe.pdf
 
 doc/yazyk_programmirovaniya_d.pdf:
 	$(CURL) $@ https://www.k0d.cc/storage/books/D/yazyk_programmirovaniya_d.pdf
@@ -43,6 +43,8 @@ doc/Programming_in_D.pdf:
 	$(CURL) $@ http://ddili.org/ders/d.en/Programming_in_D.pdf
 doc/BuildWebAppsinVibe.pdf:
 	$(CURL) $@ https://raw.githubusercontent.com/reyvaleza/vibed/main/BuildWebAppsinVibe.pdf
+doc/BuildTimekeepWithVibe.pdf:
+	$(CURL) $@ https://raw.githubusercontent.com/reyvaleza/vibed/main/BuildTimekeepWithVibe.pdf
 
 # install
 .PHONY: install update gz
@@ -52,3 +54,34 @@ update:
 	sudo apt update
 	sudo apt install -uy `cat apt.$(OS)`
 gz:
+
+
+# merge
+MERGE += Makefile README.md LICENSE $(D) $(J)
+MERGE += .clang-format .editorconfig .gitattributes .gitignore
+MERGE += apt.Linux
+MERGE += bin doc src tmp public views
+
+.PHONY: dev
+dev:
+	git push -v
+	git checkout $@
+	git pull -v
+	git checkout shadow -- $(MERGE)
+#	$(MAKE) doxy ; git add -f docs
+
+.PHONY: shadow
+shadow:
+	git push -v
+	git checkout $@
+	git pull -v
+
+.PHONY: release
+release:
+	git tag $(NOW)-$(REL)
+	git push -v --tags
+	$(MAKE) shadow
+
+ZIP = tmp/$(MODULE)_$(NOW)_$(REL)_$(BRANCH).zip
+zip:
+	git archive --format zip --output $(ZIP) HEAD
