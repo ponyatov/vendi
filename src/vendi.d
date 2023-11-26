@@ -20,6 +20,11 @@ void main(string[] args) {
     router.get("/", &index);
     router.get("/hello", &hello);
     router.get("/about", &about);
+    // link rel="stylesheet" href="css.css"
+    // script src="jquery.min.js"
+    router.get("cdn/*", serveStaticFiles("cdn/"));
+    router.get("*", serveStaticFiles("public/"));
+    // 
     listenHTTP(settings, router);
     runApplication();
 }

@@ -2,6 +2,9 @@
 MODULE  = $(notdir $(CURDIR))
 OS      = $(shell uname -s)
 
+# version
+JQUERY_VER = 3.7.1
+
 # dir
 CWD = $(CURDIR)
 BIN = $(CWD)/bin
@@ -19,13 +22,14 @@ RUN  = dub run   --compiler=$(DC)
 # src
 D += $(wildcard src/*.d)
 J += $(wildcard dub*.json)
+T += $(wildcard views/*)
 
 # all
 .PHONY: all run
 all: bin/$(MODULE)
-bin/$(MODULE): $(D) $(J)
+bin/$(MODULE): $(D) $(J) $(T)
 	$(BLD)
-run: $(D) $(J)
+run: $(D) $(J) $(T)
 	$(RUN)
 
 # format
@@ -53,8 +57,11 @@ install: gz
 update:
 	sudo apt update
 	sudo apt install -uy `cat apt.$(OS)`
-gz:
 
+gz: cdn/jquery.js
+
+cdn/jquery.js:
+	$(CURL) $@ https://code.jquery.com/jquery-$(JQUERY_VER).slim.min.js
 
 # merge
 MERGE += Makefile README.md LICENSE $(D) $(J)
