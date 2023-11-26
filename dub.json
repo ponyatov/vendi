@@ -1,0 +1,14 @@
+{
+    "name":          "vendi",
+    "description":   "vending system",
+    "homepage":      "https://github.com/ponyatov/vendi",
+    "authors":      ["Dmitry Ponyatov <dponyatov@gmail.com>"],
+    "copyright":     "Copyright © 2023, Dmitry Ponyatov <dponyatov@gmail.com>",
+    "license":       "MIT",
+    "targetType":    "executable",
+    "targetPath":    "bin",
+    "targetName":    "vendi",
+    "dependencies": {
+        "vibe-d":    "~>0.9"
+    }
+}
